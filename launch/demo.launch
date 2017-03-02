@@ -1,0 +1,4 @@
+<launch>
+  <node pkg="obj_grab_learning" type="obj_grab_learning_node" name="obj_grab_learning" output="screen">
+  </node>
+</launch>
