@@ -8,6 +8,8 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
   std_msgs
+  squirrel_manipulation_msgs
+  actionlib
 )
 
 ## System dependencies are found with CMake's conventions
@@ -100,6 +102,7 @@ find_package(catkin REQUIRED COMPONENTS
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
+  LIBRARIES CATKIN_DEPENDS roscpp std_msgs squirrel_manipulation_msgs DEPENDS
 #  INCLUDE_DIRS include
 #  LIBRARIES obj_grab_learning
 #  CATKIN_DEPENDS roscpp rospy std_msgs
@@ -115,7 +118,7 @@ catkin_package(
 # include_directories(include)
 include_directories(
   ${catkin_INCLUDE_DIRS}
-  ./include/
+  include
 )
 
 ## Declare a C++ library
@@ -133,7 +136,7 @@ add_executable(obj_grab_learning_node src/obj_grab_learning_node.cpp)
 
 ## Add cmake target dependencies of the executable
 ## same as for the library above
-add_dependencies(obj_grab_learning_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_dependencies(obj_grab_learning_node  ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
  target_link_libraries(obj_grab_learning_node
