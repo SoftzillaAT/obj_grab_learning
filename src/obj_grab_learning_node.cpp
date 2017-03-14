@@ -10,7 +10,8 @@ namespace obj_grab_learning {
     client("metahand_grasp_server", true), 
     drop("metahand_drop_server", true), 
     place("metahand_place_server", true),
-    metahand("hand_controller/actuate_hand", true)
+    metahand("hand_controller/actuate_hand", true),
+    look("squirrel_look_for_objects_in_hand", true)
   {
 
     node_handle = &nh;
@@ -20,10 +21,11 @@ namespace obj_grab_learning {
     drop.waitForServer();
     place.waitForServer();
     metahand.waitForServer();
+    look.waitForServer();
     ROS_INFO("Servers ready...");
   }
 
-  void ObjGrabLearning::runDemo()
+  void ObjGrabLearning::graspObject()
   {
 
     ROS_INFO("Run demo!");
@@ -88,6 +90,20 @@ namespace obj_grab_learning {
     }
   }
 
+  void ObjGrabLearning::startRecognition() 
+  {
+    ROS_INFO("Start Recognition...");
+    squirrel_object_perception_msgs::LookForObjectsGoal look_goal;
+    //look_goal.look_for_object = 1;
+
+    look.sendGoal(look_goal);
+    look.waitForResult();
+    ROS_INFO("Recognition complete");
+
+    actionlib::SimpleClientGoalState state = look.getState();
+    ROS_INFO("Action finished: %s",state.toString().c_str());
+  }
+
 } // close namespace
 
 int main(int argc, char **argv) 
@@ -100,8 +116,8 @@ int main(int argc, char **argv)
 
   obj_grab_learning::ObjGrabLearning my_node(n, "metahand_grasp_server");
   ROS_INFO("Class crated");
-  my_node.runDemo();
-
+  //my_node.graspObject();
+  my_node.startRecognition();
   ros::spin();
   return 0;
 }

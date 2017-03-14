@@ -29,6 +29,7 @@
 #include "squirrel_manipulation_msgs/BlindGraspAction.h"
 #include "squirrel_manipulation_msgs/PutDownAction.h"
 #include "kclhand_control/ActuateHandAction.h"
+#include "squirrel_object_perception_msgs/LookForObjectsAction.h"
 
 namespace obj_grab_learning {
 
@@ -41,12 +42,13 @@ namespace obj_grab_learning {
       actionlib::SimpleActionClient<squirrel_manipulation_msgs::DropAction> drop;
       actionlib::SimpleActionClient<squirrel_manipulation_msgs::PutDownAction> place;
       actionlib::SimpleActionClient<kclhand_control::ActuateHandAction> metahand;
-    
+      actionlib::SimpleActionClient<squirrel_object_perception_msgs::LookForObjectsAction> look;
     public:
 
 			/* constructor */
 			ObjGrabLearning(ros::NodeHandle &nh, std::string topic);
-			void runDemo();
+			void graspObject();
+      void startRecognition();
 
 	};
 
